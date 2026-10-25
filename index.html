@@ -164,6 +164,115 @@
         message.textContent = 'Your browser could not save these settings. Please try again.';
       }
     });
+    
+    // SwiftReply WhatsApp pairing controls
+    const pairingButton = document.createElement("button");
+    pairingButton.type = "button";
+    pairingButton.className = "btn primary full";
+    pairingButton.textContent = "Request WhatsApp Pairing Code";
+
+    const pairingResult = document.createElement("div");
+    pairingResult.setAttribute("role", "status");
+    pairingResult.setAttribute("aria-live", "polite");
+    pairingResult.style.cssText =
+      "margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7";
+
+    phone.insertAdjacentElement("afterend", pairingButton);
+    pairingButton.insertAdjacentElement("afterend", pairingResult);
+
+    pairingButton.addEventListener("click", async () => {
+      const number = phone.value.replace(/\D/g, "");
+
+      if (!/^\d{10,15}$/.test(number)) {
+        pairingResult.textContent =
+          "Enter your WhatsApp number with country code, for example 2348012345678.";
+        return;
+      }
+
+      pairingButton.disabled = true;
+      pairingButton.textContent = "Requesting code...";
+      pairingResult.textContent = "Contacting SwiftReply server...";
+
+      try {
+        const response = await fetch("/api/pairing-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phoneNumber: number })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.details || data.error || "Request failed.");
+        }
+
+        pairingResult.textContent =
+          "YOUR PAIRING CODE: " + data.pairingCode +
+          "\n\nOn your phone, open WhatsApp > Linked devices > Link a device > Link with phone number instead. Enter the code shown above.";
+      } catch (error) {
+        pairingResult.textContent =
+          "Could not get a pairing code: " + error.message +
+          "\nPlease check the server and try again later.";
+      } finally {
+        pairingButton.disabled = false;
+        pairingButton.textContent = "Request WhatsApp Pairing Code";
+      }
+    });
+    
+    // SwiftReply WhatsApp pairing controls
+    const pairingButton = document.createElement("button");
+    pairingButton.type = "button";
+    pairingButton.className = "btn primary full";
+    pairingButton.textContent = "Request WhatsApp Pairing Code";
+
+    const pairingResult = document.createElement("div");
+    pairingResult.setAttribute("role", "status");
+    pairingResult.setAttribute("aria-live", "polite");
+    pairingResult.style.cssText =
+      "margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7";
+
+    phone.insertAdjacentElement("afterend", pairingButton);
+    pairingButton.insertAdjacentElement("afterend", pairingResult);
+
+    pairingButton.addEventListener("click", async () => {
+      const number = phone.value.replace(/\D/g, "");
+
+      if (!/^\d{10,15}$/.test(number)) {
+        pairingResult.textContent =
+          "Enter your WhatsApp number with country code, for example 2348012345678.";
+        return;
+      }
+
+      pairingButton.disabled = true;
+      pairingButton.textContent = "Requesting code...";
+      pairingResult.textContent = "Contacting SwiftReply server...";
+
+      try {
+        const response = await fetch("/api/pairing-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phoneNumber: number })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.details || data.error || "Request failed.");
+        }
+
+        pairingResult.textContent =
+          "YOUR PAIRING CODE: " + data.pairingCode +
+          "\n\nOn your phone, open WhatsApp > Linked devices > Link a device > Link with phone number instead. Enter the code shown above.";
+      } catch (error) {
+        pairingResult.textContent =
+          "Could not get a pairing code: " + error.message +
+          "\nPlease check the server and try again later.";
+      } finally {
+        pairingButton.disabled = false;
+        pairingButton.textContent = "Request WhatsApp Pairing Code";
+      }
+    });
+
   </script>
 </body>
   </html>
