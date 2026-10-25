@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b16">
+  <meta name="description" content="SwiftReply helps you manage WhatsApp away replies for your business and personal chats.">
+  <title>SwiftReply — Your WhatsApp, Always Responsive</title>
+  <style>
+    :root {
+      --bg: #071b16;
+      --panel: #0e2921;
+      --panel2: #12352a;
+      --green: #49e6a5;
+      --text: #f4fff9;
+      --muted: #a6c3b6;
+      --border: rgba(255,255,255,.11);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at top right, #174d38 0, var(--bg) 48%);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .wrap { max-width: 1100px; margin: auto; padding: 24px 18px 50px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:800; }
+    .logo {
+      width:42px; height:42px; display:grid; place-items:center;
+      background:var(--green); color:#06271b; border-radius:14px; font-size:22px;
+    }
+    .pill { color:var(--green); border:1px solid #286c50; border-radius:99px; padding:8px 12px; font-size:12px; }
+    .hero { padding:62px 0 30px; max-width:720px; }
+    .eyebrow { color:var(--green); font-size:12px; font-weight:bold; letter-spacing:2px; }
+    h1 { font-size:clamp(36px, 7vw, 62px); line-height:1.06; margin:18px 0; letter-spacing:-2px; }
+    h1 span { color:var(--green); }
+    .lead { color:var(--muted); line-height:1.8; font-size:16px; max-width:580px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+    .btn { border:0; border-radius:12px; padding:14px 18px; font-weight:bold; }
+    .primary { background:var(--green); color:#06271b; }
+    .secondary { background:var(--panel2); color:var(--text); border:1px solid var(--border); }
+    .layout { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; align-items:start; margin-top:24px; }
+    .card { background:rgba(14,41,33,.88); border:1px solid var(--border); border-radius:20px; padding:22px; }
+    .card h2 { margin:0 0 8px; font-size:21px; }
+    .sub { color:var(--muted); font-size:13px; line-height:1.6; margin:0 0 20px; }
+    label { display:block; margin:16px 0 8px; font-size:13px; color:#d8eee3; }
+    input, textarea {
+      width:100%; padding:13px 14px; border:1px solid #315448;
+      border-radius:11px; background:#081e17; color:var(--text); outline:none;
+    }
+    input:focus, textarea:focus { border-color:var(--green); }
+    textarea { min-height:86px; resize:vertical; }
+    .full { width:100%; margin-top:16px; }
+    .note { font-size:12px; color:var(--muted); line-height:1.7; margin-top:12px; }
+    .status { display:flex; align-items:center; gap:9px; padding:13px; background:#081e17; border-radius:12px; color:var(--muted); font-size:13px; }
+    .dot { width:9px; height:9px; background:#f4b84a; border-radius:50%; }
+    .feature { display:flex; gap:12px; margin:20px 0; }
+    .feature-icon { flex:0 0 38px; height:38px; display:grid; place-items:center; border-radius:12px; background:#174333; color:var(--green); }
+    .feature strong { display:block; margin-bottom:5px; }
+    .feature p { margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .notice { border:1px solid #67512a; background:#2c2616; color:#f5d995; padding:13px; border-radius:12px; font-size:12px; line-height:1.6; margin-top:16px; }
+    footer { color:#7fa395; text-align:center; font-size:12px; padding:34px 0 0; }
+    #message { margin-top:12px; font-size:13px; line-height:1.6; color:var(--green); }
+    @media(max-width:760px) {
+      .layout { grid-template-columns:1fr; }
+      .hero { padding-top:48px; }
+      .pill { font-size:10px; }
+      .wrap { padding-left:14px; padding-right:14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="brand"><div class="logo">S</div> SwiftReply</div>
+      <div class="pill">SMART REPLIES · SIMPLE SETUP</div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">YOUR BUSINESS NEVER HAS TO GO QUIET</div>
+      <h1>Your customers get a reply, <span>even when you can't.</span></h1>
+      <p class="lead">Set up your away messages, prepare replies in your own words, and manage your availability from one simple dashboard.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="document.getElementById('setup').scrollIntoView({behavior:'smooth'})">Get started →</button>
+        <button class="btn secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="card" id="setup">
+        <h2>Set up your replies</h2>
+        <p class="sub">Choose the messages people should see when you're unavailable. Your settings are saved in this browser.</p>
+
+        <div class="status"><span class="dot"></span><span id="connection">WhatsApp is not connected yet</span></div>
+
+        <label for="phone">WhatsApp number with country code</label>
+        <input id="phone" type="tel" inputmode="numeric" placeholder="2348012345678" maxlength="15">
+
+        <label for="greeting">Your away reply</label>
+        <textarea id="greeting" maxlength="500">Hello! Thanks for messaging us. We're currently away, but we've received your message and will get back to you as soon as possible.</textarea>
+
+        <label for="business">Business or profile name (optional)</label>
+        <input id="business" maxlength="80" placeholder="e.g. My Fashion Store">
+
+        <button class="btn primary full" id="save">Save my settings</button>
+        <div id="message" role="status" aria-live="polite"></div>
+        <p class="note">This starter page saves your preferences on this device. Live WhatsApp linking and automatic message sending still need a connected backend.</p>
+      </div>
+
+      <div class="card" id="how">
+        <h2>Made for busy people</h2>
+        <p class="sub">Keep your customers informed while you focus on the work that matters.</p>
+
+        <div class="feature">
+          <div class="feature-icon">↗</div>
+          <div><strong>Replies in your words</strong><p>Write a friendly message that matches your business and how you speak.</p></div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">◷</div>
+          <div><strong>Your time, your rules</strong><p>Plan your away hours and decide when you want automatic replies enabled.</p></div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">▣</div>
+          <div><strong>Simple setup</strong><p>Manage your settings in one place, with a layout designed for phones.</p></div>
+        </div>
+
+        <div class="notice"><strong>Important:</strong> WhatsApp is not connected by this demo page yet. Saving settings does not send messages. We need to add and deploy the secure server before live linking can work.</div>
+      </div>
+    </section>
+
+    <footer>SwiftReply · Stay responsive, even when you're away.</footer>
+  </main>
+
+  <script>
+    const phone = document.getElementById('phone');
+    const greeting = document.getElementById('greeting');
+    const business = document.getElementById('business');
+    const message = document.getElementById('message');
+
+    try {
+      phone.value = localStorage.getItem('swiftreply_phone') || '';
+      greeting.value = localStorage.getItem('swiftreply_greeting') || greeting.value;
+      business.value = localStorage.getItem('swiftreply_business') || '';
+    } catch (_) {}
+
+    document.getElementById('save').addEventListener('click', () => {
+      const number = phone.value.replace(/\D/g, '');
+      if (number.length < 8 || number.length > 15) {
+        message.style.color = '#ffb0a8';
+        message.textContent = 'Enter a valid phone number with country code, for example 2348012345678.';
+        return;
+      }
+      try {
+        localStorage.setItem('swiftreply_phone', number);
+        localStorage.setItem('swiftreply_greeting', greeting.value.trim());
+        localStorage.setItem('swiftreply_business', business.value.trim());
+        message.style.color = '#49e6a5';
+        message.textContent = 'Settings saved on this device. WhatsApp is not connected yet.';
+      } catch (_) {
+        message.textContent = 'Your browser could not save these settings. Please try again.';
+      }
+    });
+  </script>
+</body>
+  </html>
